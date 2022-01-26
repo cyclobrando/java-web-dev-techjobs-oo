@@ -35,7 +35,7 @@ public class PositionType {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, value);
+        return Objects.hash(getId());
     }
 
 
