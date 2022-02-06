@@ -9,11 +9,15 @@ import static org.junit.Assert.*;
 public class JobTest {
     Job test_job;
     Job test_job_2;
+    Job test_job_3;
+    Job test_job_4;
 
     @Before
     public void createJobObjects() {
-    test_job = new Job();
-    test_job_2 = new Job();
+        test_job = new Job();
+        test_job_2 = new Job();
+        test_job_3 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality Control"), new CoreCompetency("Persistence"));
+        test_job_4 = new Job("Product tester", new Employer(""), new Location("Desert"), new PositionType("Quality Control"), new CoreCompetency("Persistence"));
     }
 
     @Test
@@ -23,25 +27,18 @@ public class JobTest {
 
     @Test
     public void testJobConstructorSetsAllFields() {
-        Job job = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality Control"), new CoreCompetency("Persistence"));
-        assertSame("Product tester", job.getName());
-        assertEquals(3, job.getId());
+        assertSame("Product tester", test_job_3.getName());
+        assertEquals(3, test_job_3.getId());
 
         //assertTrue(job.getEmployer() instanceof Employer);
-        assertNotNull(job.getEmployer());
-        assertNotNull(job.getLocation());
-        assertNotNull(job.getPositionType());
-        assertNotNull(job.getCoreCompetency());
+        assertNotNull(test_job_3.getEmployer());
+        assertNotNull(test_job_3.getLocation());
+        assertNotNull(test_job_3.getPositionType());
+        assertNotNull(test_job_3.getCoreCompetency());
     }
 
     @Test
     public void testJobsForEquality() {
-        test_job.setName("Job");
-        test_job.setEmployer(new Employer("ACME"));
-        test_job.setLocation(new Location("Desert"));
-        test_job.setPositionType(new PositionType("Quality Control"));
-        test_job.setCoreCompetency(new CoreCompetency("Persistence"));
-
         test_job_2.setName("Job");
         test_job_2.setEmployer(new Employer("ACME"));
         test_job_2.setLocation(new Location("Desert"));
@@ -49,6 +46,28 @@ public class JobTest {
         test_job_2.setCoreCompetency(new CoreCompetency("Persistence"));
 
         //assertFalse(test_job.equals(test_job_2));
-        assertNotEquals(test_job, test_job_2);
+        assertNotEquals(test_job_3, test_job_2);
     }
+
+    @Test
+    public void testToStringBlankLine() {
+        assertTrue(test_job_3.toString().startsWith(" "));
+        assertTrue(test_job_3.toString().endsWith(" "));
+    }
+
+    @Test
+    public void testToStringContainsInfo() {
+        assertTrue(test_job_3.toString().contains(" \nID: " + test_job_3.getId() + "\nName: " + test_job_3.getName() + "\nEmployer: " + test_job_3.getEmployer() + "\nLocation: " + test_job_3.getLocation() + "\nPosition Type: " + test_job_3.getPositionType() + "\nCore Competency: " + test_job_3.getCoreCompetency() + "\n "));
+    }
+
+    @Test
+    public void testDataNotAvailable() {
+        assertTrue(test_job_4.toString().contains("Data not available!"));
+    }
+
+    @Test
+    public void testJobDoesntExist() {
+        assertTrue(test_job.toString().contains("OOPS! This job does not seem to exist!"));
+    }
+
 }
