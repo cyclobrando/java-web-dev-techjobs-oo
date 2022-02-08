@@ -22,7 +22,8 @@ public class JobTest {
 
     @Test
     public void testSettingJobId() {
-        assertTrue(test_job.getId() == 1 && test_job_2.getId() == 2);
+        assertTrue(test_job.getId() == 1);
+        assertTrue(test_job_2.getId() == 2);
     }
 
     @Test
@@ -30,11 +31,10 @@ public class JobTest {
         assertSame("Product tester", test_job_3.getName());
         assertEquals(3, test_job_3.getId());
 
-        //assertTrue(job.getEmployer() instanceof Employer);
-        assertNotNull(test_job_3.getEmployer());
-        assertNotNull(test_job_3.getLocation());
-        assertNotNull(test_job_3.getPositionType());
-        assertNotNull(test_job_3.getCoreCompetency());
+        assertTrue(test_job_3.getEmployer() instanceof Employer);
+        assertTrue(test_job_3.getLocation() instanceof Location);
+        assertTrue(test_job_3.getPositionType() instanceof PositionType);
+        assertTrue(test_job_3.getCoreCompetency() instanceof CoreCompetency);
     }
 
     @Test
@@ -45,7 +45,6 @@ public class JobTest {
         test_job_2.setPositionType(new PositionType("Quality Control"));
         test_job_2.setCoreCompetency(new CoreCompetency("Persistence"));
 
-        //assertFalse(test_job.equals(test_job_2));
         assertNotEquals(test_job_3, test_job_2);
     }
 
@@ -66,7 +65,7 @@ public class JobTest {
     }
 
     @Test
-    public void testJobDoesntExist() {
+    public void testJobDoesNotExist() {
         assertTrue(test_job.toString().contains("OOPS! This job does not seem to exist!"));
     }
 
